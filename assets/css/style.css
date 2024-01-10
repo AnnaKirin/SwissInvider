@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "GamePlayed";
+  src: url(../fonts/GamePlayed.ttf);
+}
+
+body {
+  overflow: hidden; /*powinno byc globalnie */
+  font-family: "GamePlayed";
+}
+
+.container {
+  background-color: #daa520;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+h1 {
+  color: #eee;
+  font-size: 3em;
+  text-align: center;
+  font-family: "GamePlayed";
+  /* display: inline-block; */
+}
+#gameCanvas {
+  border: 10px solid black;
+  border-radius: 10px;
+}
