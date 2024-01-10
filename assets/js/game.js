@@ -24,6 +24,7 @@ window.addEventListener("load", onLoad);
 function onLoad() {
   initializeCanvas();
   cloud = createCloud(canvas);
+  console.log("cloud was drawn");
   player = createPlayer(canvas);
   generateCows();
 
@@ -65,6 +66,7 @@ function clean() {
 function draw() {
   // ctx.fillStyle = "rgba(0, 0, 100, 0.5)";
   cloud.draw(ctx);
+
   player.draw(ctx);
 
   cows.forEach((cow) => {
