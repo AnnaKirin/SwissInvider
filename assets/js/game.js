@@ -12,7 +12,9 @@ let canvas;
 let ctx;
 
 let player;
-let cloud;
+let moon;
+let cloud1;
+let cloud2;
 
 let currentTime = Date.now();
 let previousTime = 0;
@@ -23,9 +25,10 @@ window.addEventListener("load", onLoad);
 
 function onLoad() {
   initializeCanvas();
-  cloud = new Cloud(canvas);
-  console.log("cloud was drawn");
-  player = createPlayer(canvas);
+  cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
+  cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
+  moon = new Moon(canvas);
+  player = new Player(canvas);
   generateCows();
 
   addEventListener("keydown", (event) => {
@@ -65,10 +68,11 @@ function clean() {
 
 function draw() {
   // ctx.fillStyle = "rgba(0, 0, 100, 0.5)";
-  cloud.draw(ctx);
+  moon.draw(ctx);
+  cloud1.draw(ctx, 200);
+  cloud2.draw(ctx, 40);
 
   player.draw(ctx);
-
   cows.forEach((cow) => {
     cow.draw(ctx);
   });
@@ -83,7 +87,9 @@ function update() {
     cow.update();
   });
 
-  cloud.update();
+  moon.update();
+  cloud1.update1(2);
+  cloud2.update2(4);
   player.update();
 }
 

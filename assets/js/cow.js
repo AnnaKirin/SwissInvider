@@ -24,7 +24,7 @@ function createCow(canvas) {
       if (cowUnderScreen) {
         this.onUnderScreen();
       }
-
+      //uderza sie w sciany
       if (this.x + COW_SiZE > canvas.clientWidth) {
         this.velocityX *= -1;
       } else if (this.x < 0) {
