@@ -1,5 +1,5 @@
 const COW_SiZE = 100;
-const MAX_COW_SPEED = 1.2;
+const MAX_COW_SPEED = 1.0;
 
 function createCow(canvas) {
   //poczatek funkcji
@@ -7,8 +7,8 @@ function createCow(canvas) {
     //zaczyna sie obiekt
 
     // pola
-    velocityX: 2,
-    velocityY: 2,
+    velocityX: 0.5,
+    velocityY: 0.5,
     avatar: createCowAvatar(),
     y: canvas.clientHeight + COW_SiZE,
     x: getRandomInt(canvas.clientWidth),

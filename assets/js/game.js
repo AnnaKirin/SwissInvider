@@ -23,7 +23,7 @@ window.addEventListener("load", onLoad);
 
 function onLoad() {
   initializeCanvas();
-  cloud = createCloud(canvas);
+  cloud = new Cloud(canvas);
   console.log("cloud was drawn");
   player = createPlayer(canvas);
   generateCows();
@@ -59,7 +59,7 @@ function initializeCanvas() {
 }
 
 function clean() {
-  ctx.fillStyle = "rgba(11, 7, 106, 0.8)";
+  ctx.fillStyle = "rgba(11, 7, 60, 0.8)";
   ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 }
 
@@ -93,7 +93,7 @@ function onKeyUp() {
 
 function generateCows() {
   setTimeout(() => {
-    if (cows.length < 10) {
+    if (cows.length < 5) {
       cows.push(createCow(canvas)); //jako parametr wywolujemy funkcje, ktora zwroci obiekt (mozemy przekazywac funkcje bez wywolania). Przekazujemy wynik wywolania funkcji a nie sama funkcje
 
       generateCows();
