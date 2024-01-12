@@ -15,6 +15,7 @@ let player;
 let moon;
 let cloud1;
 let cloud2;
+let laser1;
 
 let currentTime = Date.now();
 let previousTime = 0;
@@ -27,6 +28,7 @@ function onLoad() {
   initializeCanvas();
   cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
   cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
+  laser1 = new Laser(canvas);
   moon = new Moon(canvas);
   player = new Player(canvas);
   generateCows();
@@ -36,6 +38,13 @@ function onLoad() {
       player.moveRight();
     } else if (event.key === "ArrowLeft") {
       player.moveLeft();
+    }
+  });
+
+  addEventListener("keydown", (event) => {
+    if (event.key === " ") {
+      laser1.draw(ctx);
+      laser1.move();
     }
   });
 
@@ -71,6 +80,8 @@ function draw() {
   moon.draw(ctx);
   cloud1.draw(ctx, 200);
   cloud2.draw(ctx, 40);
+
+  // laser1.draw(ctx);
 
   player.draw(ctx);
   cows.forEach((cow) => {
