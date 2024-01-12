@@ -15,20 +15,20 @@ let player;
 let moon;
 let cloud1;
 let cloud2;
-let laser1;
 
 let currentTime = Date.now();
 let previousTime = 0;
 let cows = [];
 let deltaTime;
+let lasers = [];
 
 window.addEventListener("load", onLoad);
+console.log("page is fully loaded");
 
 function onLoad() {
   initializeCanvas();
   cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
   cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
-  laser1 = new Laser(canvas);
   moon = new Moon(canvas);
   player = new Player(canvas);
   generateCows();
@@ -38,13 +38,8 @@ function onLoad() {
       player.moveRight();
     } else if (event.key === "ArrowLeft") {
       player.moveLeft();
-    }
-  });
-
-  addEventListener("keydown", (event) => {
-    if (event.key === " ") {
-      laser1.draw(ctx);
-      laser1.move();
+    } else if (event.key === " ") {
+      lasers.push(new Laser(canvas)); //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
     }
   });
 
@@ -81,7 +76,9 @@ function draw() {
   cloud1.draw(ctx, 200);
   cloud2.draw(ctx, 40);
 
-  // laser1.draw(ctx);
+  lasers.forEach((laser) => {
+    laser.draw(ctx);
+  });
 
   player.draw(ctx);
   cows.forEach((cow) => {
@@ -90,6 +87,7 @@ function draw() {
 }
 
 function update() {
+  console.log(lasers.length);
   previousTime = currentTime;
   currentTime = Date.now();
   deltaTime = currentTime - previousTime;
@@ -102,6 +100,14 @@ function update() {
   cloud1.update1(2);
   cloud2.update2(4);
   player.update();
+
+  lasers.forEach((laser) => {
+    laser.update();
+  });
+
+  lasers = lasers.filter((laser) => {
+    return laser.isActive();
+  });
 }
 
 function onKeyUp() {

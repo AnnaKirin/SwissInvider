@@ -7,7 +7,7 @@ class Player {
     this.direction = "STOP";
     this.liveLevel = 1.0;
     this.isAlive = true;
-    this.velocityX = 0.3;
+    this.velocityX = 0.5;
     this.velocityY = 0.5;
   }
   createPlayerAvatar() {

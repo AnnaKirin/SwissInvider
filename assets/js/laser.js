@@ -4,6 +4,7 @@ class Laser {
     this.avatar = this.createPlayerAvatar();
     this.x = 0.5 * this.canvas.clientWidth - 10;
     this.y = 0.3 * this.canvas.clientHeight;
+    this.state = "ACTIVE";
   }
   createPlayerAvatar() {
     let newImage = new Image();
@@ -13,8 +14,20 @@ class Laser {
   draw(context) {
     context.drawImage(this.avatar, this.x, this.y, 100, 100);
   }
-  move() {
-    this.y += 0.0005;
+  update() {
+    this.y += 5;
+    if (this.y > this.canvas.clientHeight) {
+      this.state = "INACTIVE";
+    }
+  }
+
+  isActive() {
+    // if (this.state == "INACTIVE") {
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    return this.state == "ACTIVE";
   }
 }
 

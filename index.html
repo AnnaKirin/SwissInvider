@@ -1,6 +1,6 @@
 <!--
   V 0) Git commit 
-    1)Na przycisk pojawia sie gra i canvas
+ V  1)Na przycisk pojawia sie gra i canvas
     2)Trzeba bedzie sie bronic przed latajacymi kawalkami sera
   V 3)Wstawic w tlo poruszajace sie chmurki
   V  - kilka chmurek z roznymi predkosciami
@@ -11,8 +11,11 @@
  V 6) zeby ufuludek nie znikal za krawedzia
  V 7) przerobic playera na klase
  ?) Jak lepiej cos poprawiac, bo zaczynasz od jednej rzeczy i potem wszystko sie psuje - Mozna patrzec na zmiany w source tree poki nie bylo commitow
-    8) Dodac pocisk zeby sie pojawial na space i spadal w dol
+ V 8) Dodac pocisk zeby sie pojawial na space i spadal w dol
     9)add txt to gitignore
+    10) Laser tam gdzie statek
+    11) Laser z krowa, zeby krowa zmieniala status na inactive
+    12) Zycie playera dodac jak trafisz krowe
 -->
 
 <!DOCTYPE html>
@@ -31,12 +34,20 @@
     <script src="assets/js/game.js"></script>
     <script src="assets/js/moon.js"></script>
     <script src="assets/js/laser.js"></script>
+    <script>
+      function onStart() {
+        var hiddenElements = document.getElementsByClassName("container"); //Elements oznacza tablice elementow. Trzeba odwolac sie do konkretnego elementu
+        hiddenElements[0].style.visibility = "visible";
+        document.getElementById("playBtn").style.visibility = "collapse";
+      }
+    </script>
   </head>
 
   <body>
-    <div class="container">
+    <button id="playBtn" onclick="onStart()">start game</button>
+    <div class="container" style="visibility: hidden">
       <h1>Swiss invider</h1>
-      <!-- <button class="menu">start game</button> -->
+
       <div>
         <canvas id="gameCanvas"> </canvas>
       </div>
