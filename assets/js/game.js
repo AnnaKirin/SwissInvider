@@ -21,6 +21,7 @@ let previousTime = 0;
 let cows = [];
 let deltaTime;
 let lasers = [];
+let background;
 
 window.addEventListener("load", onLoad);
 console.log("page is fully loaded");
@@ -32,6 +33,7 @@ function onLoad() {
   moon = new Moon(canvas);
   player = new Player(canvas);
   generateCows();
+  background = new Background(canvas, 0, 0);
 
   addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
@@ -64,6 +66,10 @@ function initializeCanvas() {
   canvas.height = sizeHeight;
   canvas.style.width = sizeWidth;
   canvas.style.height = sizeHeight;
+
+  // background.onload = function () {
+  //   ctx.drawImage(background, 50, 50);
+  // };
 }
 
 function clean() {
@@ -72,7 +78,11 @@ function clean() {
 }
 
 function draw() {
+  // background.onload = function (ctx) {
+  //   ctx.drawImage(background, 50, 50);
+  // };
   // ctx.fillStyle = "rgba(0, 0, 100, 0.5)";
+  background.draw(ctx);
   moon.draw(ctx);
   cloud1.draw(ctx, 200);
   cloud2.draw(ctx, 40);
@@ -88,11 +98,11 @@ function draw() {
 }
 
 function update() {
-  console.log(lasers.length);
   previousTime = currentTime;
   currentTime = Date.now();
   deltaTime = currentTime - previousTime;
 
+  background.update();
   cows.forEach((cow) => {
     cow.update();
   });
@@ -123,5 +133,4 @@ function generateCows() {
       generateCows();
     }
   }, getRandomInt(5000));
-  console.table(cows);
 }
