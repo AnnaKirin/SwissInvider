@@ -1,9 +1,9 @@
 class Laser {
-  constructor() {
+  constructor(canvas, x, y) {
     this.canvas = canvas;
     this.avatar = this.createPlayerAvatar();
-    this.x = 0.5 * this.canvas.clientWidth - 10;
-    this.y = 0.3 * this.canvas.clientHeight;
+    this.x = x;
+    this.y = y;
     this.state = "ACTIVE";
   }
   createPlayerAvatar() {

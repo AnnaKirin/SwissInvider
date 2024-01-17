@@ -39,7 +39,8 @@ function onLoad() {
     } else if (event.key === "ArrowLeft") {
       player.moveLeft();
     } else if (event.key === " ") {
-      lasers.push(new Laser(canvas)); //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
+      const laser = new Laser(canvas, player.x, player.y);
+      lasers.push(laser); //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
     }
   });
 
@@ -122,4 +123,5 @@ function generateCows() {
       generateCows();
     }
   }, getRandomInt(5000));
+  console.table(cows);
 }
