@@ -13,7 +13,6 @@ class Background {
     return background;
   }
   draw(context) {
-    console.log(this.x);
     context.drawImage(
       this.back1,
       this.x,

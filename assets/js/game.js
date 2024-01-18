@@ -13,8 +13,7 @@ let ctx;
 
 let player;
 let moon;
-let cloud1;
-let cloud2;
+let clouds = [];
 
 let currentTime = Date.now();
 let previousTime = 0;
@@ -28,12 +27,14 @@ console.log("page is fully loaded");
 
 function onLoad() {
   initializeCanvas();
-  cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
-  cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
+  // cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
+  // cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
   moon = new Moon(canvas);
   player = new Player(canvas);
-  generateCows();
   background = new Background(canvas, 0, 0);
+  generateCows();
+  debugger;
+  generateClouds();
 
   addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
@@ -66,10 +67,6 @@ function initializeCanvas() {
   canvas.height = sizeHeight;
   canvas.style.width = sizeWidth;
   canvas.style.height = sizeHeight;
-
-  // background.onload = function () {
-  //   ctx.drawImage(background, 50, 50);
-  // };
 }
 
 function clean() {
@@ -78,20 +75,21 @@ function clean() {
 }
 
 function draw() {
-  // background.onload = function (ctx) {
-  //   ctx.drawImage(background, 50, 50);
-  // };
-  // ctx.fillStyle = "rgba(0, 0, 100, 0.5)";
   background.draw(ctx);
   moon.draw(ctx);
-  cloud1.draw(ctx, 200);
-  cloud2.draw(ctx, 40);
+  player.draw(ctx);
+
+  // cloud1.draw(ctx, 200);
+  // cloud2.draw(ctx, 40);
 
   lasers.forEach((laser) => {
     laser.draw(ctx);
   });
 
-  player.draw(ctx);
+  clouds.forEach((cloud) => {
+    cloud.draw(ctx, 200);
+  });
+
   cows.forEach((cow) => {
     cow.draw(ctx);
   });
@@ -108,15 +106,19 @@ function update() {
   });
 
   moon.update();
-  cloud1.update1(2);
-  cloud2.update2(4);
+  // cloud1.update1(2);
+  // cloud2.update2(4);
   player.update();
+
+  clouds.forEach((cloud) => {
+    cloud.update(2);
+  });
 
   lasers.forEach((laser) => {
     laser.update();
   });
-
   lasers = lasers.filter((laser) => {
+    //
     return laser.isActive();
   });
 }
@@ -133,4 +135,13 @@ function generateCows() {
       generateCows();
     }
   }, getRandomInt(5000));
+}
+
+function generateClouds() {
+  setTimeout(() => {
+    if (clouds.length < 4) {
+      const cloud = new Cloud(canvas, getRandomFloat(0, 100));
+      clouds.push(cloud);
+    }
+  });
 }

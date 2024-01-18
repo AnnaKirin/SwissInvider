@@ -15,13 +15,13 @@ class Cloud {
     newImage.src = "assets/images/clouds.png";
     return newImage;
   }
-  update1(x) {
+  update(x) {
     this.x -= x;
     if (this.x < -200) {
       this.x = this.canvas.clientWidth + 100;
     }
   }
-  //nie dziala z his.x = this.canvas.clientWidth + this.size;
+
   update2(x) {
     this.x -= x;
     if (this.x < -200) {
