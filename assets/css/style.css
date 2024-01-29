@@ -27,7 +27,8 @@ h1 {
   border: 10px solid black;
   border-radius: 10px;
 }
-#playBtn {
+#playBtn,
+#overBtn {
   color: #fff;
   padding: 15px 25px;
   background-color: #4238d2;

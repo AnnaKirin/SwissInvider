@@ -12,9 +12,11 @@ function createCow(canvas) {
     avatar: createCowAvatar(),
     y: canvas.clientHeight + COW_SiZE,
     x: getRandomInt(canvas.clientWidth),
+    w: COW_SiZE,
+    h: COW_SiZE,
 
     // funkcje
-    update: function () {
+    update: function (deltaTime) {
       this.velocityY += 0.0015 * deltaTime;
       this.x = this.x + this.velocityX * deltaTime;
       this.y = this.y + this.velocityY * deltaTime;

@@ -2,12 +2,12 @@
 //odwolywanie przez this tylko do pol w objekcie albo klasie
 
 class Cloud {
-  constructor(canvas, y) {
+  constructor(canvas, y, size) {
     this.canvas = canvas;
     this.avatar = this.createCloudAvatar();
     this.x = this.canvas.clientWidth;
     this.y = y;
-    this.size;
+    this.size = size;
   }
 
   createCloudAvatar() {
@@ -17,20 +17,24 @@ class Cloud {
   }
   update(x) {
     this.x -= x;
-    if (this.x < -200) {
+    if (this.size < 100) {
+      this.x -= x / 2;
+    }
+    if (this.x < -300) {
       this.x = this.canvas.clientWidth + 100;
     }
   }
 
-  update2(x) {
-    this.x -= x;
-    if (this.x < -200) {
-      this.x = this.canvas.clientWidth + 100;
-    }
-  }
-  draw(context, size) {
+  // update2(x) {
+  //   this.x -= x;
+  //   if (this.x < -200) {
+  //     this.x = this.canvas.clientWidth + 100;
+  //   }
+  // }
+
+  draw(context) {
     context.globalAlpha = 0.3;
-    context.drawImage(this.avatar, this.x, this.y, size, size);
+    context.drawImage(this.avatar, this.x, this.y, this.size, this.size);
     context.globalAlpha = 1;
   }
 }

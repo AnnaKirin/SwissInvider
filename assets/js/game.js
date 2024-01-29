@@ -7,141 +7,153 @@ finction () {} - funkcja
 functon dupa() {} - funkcja
 
 */
+class Game {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
+    this.initializeCanvas();
+    this.player = new Player(canvas);
+    this.moon = new Moon(canvas);
+    this.background = new Background(canvas, 0, 0);
+    this.cows = [];
+    this.generateCows();
+    this.clouds = [];
+    this.generateClouds();
+    this.lasers = [];
+    this.currentTime = Date.now();
+    this.previousTime = 0;
+    this.deltaTime = 0;
+  }
 
-let canvas;
-let ctx;
+  start() {
+    this.intervalID = setInterval(() => {
+      this.update();
+      this.clean();
+      this.draw();
+    }, 16);
+  }
+  executeOnGameOver(callback) {
+    this.gameOverCallback = callback;
+  }
 
-let player;
-let moon;
-let clouds = [];
+  initializeCanvas() {
+    let sizeWidth = (80 * window.innerWidth) / 100,
+      sizeHeight = (60 * window.innerHeight) / 100;
 
-let currentTime = Date.now();
-let previousTime = 0;
-let cows = [];
-let deltaTime;
-let lasers = [];
-let background;
+    this.canvas.width = sizeWidth;
+    this.canvas.height = sizeHeight;
+    this.canvas.style.width = sizeWidth;
+    this.canvas.style.height = sizeHeight;
+  }
+  generateCows() {
+    setTimeout(() => {
+      if (this.cows.length < 9) {
+        this.cows.push(createCow(this.canvas));
+        //jako parametr wywolujemy funkcje, ktora zwroci obiekt (mozemy przekazywac funkcje bez wywolania). Przekazujemy wynik wywolania funkcji a nie sama funkcje
+      }
 
-window.addEventListener("load", onLoad);
-console.log("page is fully loaded");
+      this.generateCows();
+    }, getRandomInt(5000));
+  }
+  generateClouds() {
+    setTimeout(() => {
+      if (this.clouds.length < 4) {
+        const cloud = new Cloud(
+          this.canvas,
+          getRandomFloat(0, 200),
+          getRandomFloat(50, 200)
+        );
+        this.clouds.push(cloud);
+        this.generateClouds();
+      }
+    }, getRandomInt(4000));
+  }
+  clean() {
+    this.ctx.fillStyle = "rgba(11, 7, 60, 0.8)";
+    this.ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
+  }
+  draw() {
+    this.background.draw(this.ctx);
+    this.moon.draw(this.ctx);
+    this.player.draw(this.ctx);
 
-function onLoad() {
-  initializeCanvas();
-  // cloud1 = new Cloud(canvas, getRandomFloat(0, 100));
-  // cloud2 = new Cloud(canvas, getRandomFloat(0, 10));
-  moon = new Moon(canvas);
-  player = new Player(canvas);
-  background = new Background(canvas, 0, 0);
-  generateCows();
-  debugger;
-  generateClouds();
+    this.lasers.forEach((laser) => {
+      laser.draw(this.ctx);
+    });
 
-  addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-      player.moveRight();
-    } else if (event.key === "ArrowLeft") {
-      player.moveLeft();
-    } else if (event.key === " ") {
-      const laser = new Laser(canvas, player.x, player.y);
-      lasers.push(laser); //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
+    this.clouds.forEach((cloud) => {
+      cloud.draw(this.ctx);
+    });
+
+    this.cows.forEach((cow) => {
+      cow.draw(this.ctx);
+    });
+  }
+
+  update() {
+    this.previousTime = this.currentTime;
+    this.currentTime = Date.now();
+    this.deltaTime = this.currentTime - this.previousTime;
+
+    this.background.update();
+    this.moon.update();
+    this.player.update(this.deltaTime);
+
+    this.cows.forEach((cow) => {
+      cow.update(this.deltaTime);
+    });
+
+    this.clouds.forEach((cloud) => {
+      cloud.update(2);
+    });
+
+    this.lasers = this.lasers.filter((laser) => {
+      return laser.isActive();
+    });
+
+    this.lasers.forEach((laser, index) => {
+      laser.update();
+      let collisionDetected = false;
+
+      // // // Tablica krowy jest filtrowana czy jest spelniony warunek. Funkcja zwraca true. Filter tworzy nowa
+      // // //tablice z krowami dla ktorych isCollision jest false
+      this.cows = this.cows.filter((cow) => {
+        if (isCollision(laser, cow) && !collisionDetected) {
+          this.lasers.splice(index, 1);
+          this.player.addPoints(10);
+          collisionDetected = true;
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
+    if (!this.player.playerAlive()) {
+      this.gameOverCallback();
+      clearInterval(this.intervalID);
     }
-  });
-
-  addEventListener("keyup", onKeyUp);
-
-  setInterval(() => {
-    update();
-    clean();
-    draw();
-  }, 16);
+  }
+  moveRight() {
+    this.player.moveRight();
+  }
+  moveLeft() {
+    this.player.moveLeft();
+  }
+  fire() {
+    const laser = new Laser(this.canvas, this.player.x, this.player.y + 90);
+    this.lasers.push(laser);
+    //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
+  }
+  onKeyUp() {
+    this.player.stop();
+  }
 }
 
-function initializeCanvas() {
-  canvas = document.getElementById("gameCanvas");
-  ctx = canvas.getContext("2d");
-
-  let sizeWidth = (80 * window.innerWidth) / 100,
-    sizeHeight = (60 * window.innerHeight) / 100;
-
-  canvas.width = sizeWidth;
-  canvas.height = sizeHeight;
-  canvas.style.width = sizeWidth;
-  canvas.style.height = sizeHeight;
-}
-
-function clean() {
-  ctx.fillStyle = "rgba(11, 7, 60, 0.8)";
-  ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-}
-
-function draw() {
-  background.draw(ctx);
-  moon.draw(ctx);
-  player.draw(ctx);
-
-  // cloud1.draw(ctx, 200);
-  // cloud2.draw(ctx, 40);
-
-  lasers.forEach((laser) => {
-    laser.draw(ctx);
-  });
-
-  clouds.forEach((cloud) => {
-    cloud.draw(ctx, 200);
-  });
-
-  cows.forEach((cow) => {
-    cow.draw(ctx);
-  });
-}
-
-function update() {
-  previousTime = currentTime;
-  currentTime = Date.now();
-  deltaTime = currentTime - previousTime;
-
-  background.update();
-  cows.forEach((cow) => {
-    cow.update();
-  });
-
-  moon.update();
-  // cloud1.update1(2);
-  // cloud2.update2(4);
-  player.update();
-
-  clouds.forEach((cloud) => {
-    cloud.update(2);
-  });
-
-  lasers.forEach((laser) => {
-    laser.update();
-  });
-  lasers = lasers.filter((laser) => {
-    //
-    return laser.isActive();
-  });
-}
-
-function onKeyUp() {
-  player.stop();
-}
-
-function generateCows() {
-  setTimeout(() => {
-    if (cows.length < 5) {
-      cows.push(createCow(canvas)); //jako parametr wywolujemy funkcje, ktora zwroci obiekt (mozemy przekazywac funkcje bez wywolania). Przekazujemy wynik wywolania funkcji a nie sama funkcje
-
-      generateCows();
-    }
-  }, getRandomInt(5000));
-}
-
-function generateClouds() {
-  setTimeout(() => {
-    if (clouds.length < 4) {
-      const cloud = new Cloud(canvas, getRandomFloat(0, 100));
-      clouds.push(cloud);
-    }
-  });
+function isCollision(rect1, rect2) {
+  return (
+    rect1.x < rect2.x + rect2.w &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
+    rect1.y + rect1.h > rect2.y
+  );
 }

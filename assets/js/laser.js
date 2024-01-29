@@ -4,6 +4,8 @@ class Laser {
     this.avatar = this.createPlayerAvatar();
     this.x = x;
     this.y = y;
+    this.w = 50;
+    this.h = 50;
     this.state = "ACTIVE";
   }
   createPlayerAvatar() {
@@ -12,10 +14,10 @@ class Laser {
     return newImage;
   }
   draw(context) {
-    context.drawImage(this.avatar, this.x, this.y, 100, 100);
+    context.drawImage(this.avatar, this.x, this.y, this.w, this.h);
   }
   update() {
-    this.y += 5;
+    this.y += 10;
     if (this.y > this.canvas.clientHeight) {
       this.state = "INACTIVE";
     }
