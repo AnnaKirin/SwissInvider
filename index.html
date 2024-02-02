@@ -39,54 +39,33 @@
     <script src="assets/js/moon.js"></script>
     <script src="assets/js/laser.js"></script>
     <script src="assets/js/background.js"></script>
+    <script src="assets/js/navigation.js"></script>
     <script>
       window.addEventListener("load", () => {
-        let canvas = document.getElementById("gameCanvas");
-        let game = new Game(canvas);
+        canvas = document.getElementById("gameCanvas");
+        game = new Game(canvas);
 
-        document.getElementById("playBtn").addEventListener("click", () => {
-          var hiddenElements = document.getElementsByClassName("container"); //Elements oznacza tablice elementow. Trzeba odwolac sie do konkretnego elementu
-          hiddenElements[0].style.visibility = "visible";
-          document.getElementById("playBtn").style.visibility = "hidden";
-          game.start();
-        });
+        game.executeOnGameOver(onGameOver);
 
-        addEventListener("keydown", (event) => {
-          if (event.key === "ArrowRight") {
-            game.moveRight();
-          } else if (event.key === "ArrowLeft") {
-            game.moveLeft();
-          } else if (event.key === " ") {
-            game.fire();
-          }
-        });
+        document
+          .getElementById("playButton")
+          .addEventListener("click", onStart);
 
-        addEventListener("keyup", () => {
-          game.onKeyUp();
-        });
-
-        game.executeOnGameOver(() => {
-          console.log("game over!");
-          var hiddenElements = document.getElementsByClassName("container");
-          hiddenElements[0].style.visibility = "hidden";
-          document.getElementById("overBtn").style.visibility = "visible";
-          document.getElementById("playBtn").style.visibility = "visible";
-        });
+        addEventListener("keydown", onKeyDown);
+        addEventListener("keyup", onKeyUp);
       });
     </script>
   </head>
 
   <body>
-    <button id="playBtn">Start game</button>
-    <div id="overBtn" style="visibility: hidden" display="inline">
-      Game over!
-    </div>
-    <div class="container" style="visibility: hidden">
+    <div id="controlContainer">
       <h1>Swiss invader</h1>
+      <button id="playButton">Start game</button>
+      <input type="text" />
+    </div>
 
-      <div>
-        <canvas id="gameCanvas"> </canvas>
-      </div>
+    <div class="container" id="gameContainer" style="visibility: hidden">
+      <canvas id="gameCanvas"> </canvas>
     </div>
   </body>
 </html>

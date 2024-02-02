@@ -10,25 +10,28 @@ body {
   align-items: center; */
 }
 
-.container {
+#gameContainer {
   background-color: #daa520;
-  display: flex;
+  /* display: flex;
   flex-flow: column wrap;
-  align-items: center;
+  align-items: center; */
   width: 100vw;
   height: 100vh;
+  position: absolute;
+}
+#controlContainer {
+  position: absolute;
 }
 
 h1 {
-  color: #eee;
-  font-size: 3em;
+  color: #0e12cf;
+  font-size: 3rem;
 }
 #gameCanvas {
   border: 10px solid black;
   border-radius: 10px;
 }
-#playBtn,
-#overBtn {
+#playButton {
   color: #fff;
   padding: 15px 25px;
   background-color: #4238d2;
@@ -51,7 +54,7 @@ h1 {
   border-radius: 14px;
   font-size: 30px;
   font-family: "GamePlayed";
-
+  display: block;
   border: 0;
 
   user-select: none;

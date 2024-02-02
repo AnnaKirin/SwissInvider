@@ -12,9 +12,13 @@ class Game {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.initializeCanvas();
-    this.player = new Player(canvas);
-    this.moon = new Moon(canvas);
-    this.background = new Background(canvas, 0, 0);
+    this.gameActive = false;
+  }
+
+  start() {
+    this.player = new Player(this.canvas);
+    this.moon = new Moon(this.canvas);
+    this.background = new Background(this.canvas, 0, 0);
     this.cows = [];
     this.generateCows();
     this.clouds = [];
@@ -23,15 +27,15 @@ class Game {
     this.currentTime = Date.now();
     this.previousTime = 0;
     this.deltaTime = 0;
-  }
+    this.gameActive = true;
 
-  start() {
     this.intervalID = setInterval(() => {
       this.update();
       this.clean();
       this.draw();
     }, 16);
   }
+
   executeOnGameOver(callback) {
     this.gameOverCallback = callback;
   }
@@ -128,6 +132,7 @@ class Game {
         }
       });
     });
+
     if (!this.player.playerAlive()) {
       this.gameOverCallback();
       clearInterval(this.intervalID);
@@ -146,6 +151,9 @@ class Game {
   }
   onKeyUp() {
     this.player.stop();
+  }
+  isGameActive() {
+    return this.gameActive;
   }
 }
 
