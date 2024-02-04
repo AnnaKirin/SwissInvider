@@ -51,8 +51,29 @@
           .getElementById("playButton")
           .addEventListener("click", onStart);
 
+        document.getElementById("saveButton").addEventListener("click", () => {
+          let savedElement = document.getElementById("playerNameInput").value;
+
+          // let currentPlayers = localStorage.getItem("players");
+          let player = { name: savedElement, points: 10 };
+          let players = JSON.parse(localStorage.getItem("players"));
+          players.push(player);
+          localStorage.setItem("players", JSON.stringify(players));
+          loadPlayersTable();
+        });
         addEventListener("keydown", onKeyDown);
         addEventListener("keyup", onKeyUp);
+        function loadPlayersTable() {
+          let playersTable = document.getElementById("playersTable");
+          playersTable.innerHTML = "";
+          let players = JSON.parse(localStorage.getItem("players"));
+          players.forEach((player) => {
+            let playersTableElement = document.createElement("li");
+            playersTableElement.innerHTML = player.name;
+            playersTable.appendChild(playersTableElement);
+          });
+        }
+        loadPlayersTable();
       });
     </script>
   </head>
@@ -61,7 +82,9 @@
     <div id="controlContainer">
       <h1>Swiss invader</h1>
       <button id="playButton">Start game</button>
-      <input type="text" />
+      <input id="playerNameInput" type="text" />
+      <button id="saveButton">Save</button>
+      <ul id="playersTable"></ul>
     </div>
 
     <div class="container" id="gameContainer" style="visibility: hidden">
