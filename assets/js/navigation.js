@@ -7,12 +7,14 @@ function onStart() {
   gameContainer.style.visibility = "visible";
   document.getElementById("controlContainer").style.visibility = "hidden";
   game.start();
+
 }
 
 function onGameOver() {
   var gameContainer = document.getElementById("gameContainer");
   gameContainer.style.visibility = "hidden";
   document.getElementById("controlContainer").style.visibility = "visible";
+  document.getElementById("gameRating").style.visibility = "visible";
 }
 
 function onKeyUp(event) {

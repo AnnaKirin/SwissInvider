@@ -155,7 +155,12 @@ class Game {
   isGameActive() {
     return this.gameActive;
   }
-}
+
+  getPoints() {
+    return this.player.points
+  }
+
+} //koniec klasy
 
 function isCollision(rect1, rect2) {
   return (
