@@ -1,2 +1,3 @@
 *.txt
 sandbox
+node_modules/
