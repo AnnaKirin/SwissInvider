@@ -6,35 +6,67 @@
 body {
   overflow: hidden; /* powinno byc globalnie */
   font-family: "GamePlayed";
-  /* display: flex;
-  align-items: center; */
+  background-color: #daa520;
+}
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* height: 100vh; */
 }
 
-#gameContainer {
-  background-color: #daa520;
-  /* display: flex;
-  flex-flow: column wrap;
-  align-items: center; */
-  width: 100vw;
-  height: 100vh;
-  /* position: absolute; */
-}
-#controlContainer {
-  position: absolute;
-}
+/* #controlContainer {
+  position: relative;
+  z-index: 1;
+} */
 
 h1 {
   color: #0e12cf;
   font-size: 3rem;
+  text-align: center;
+}
+
+#gameRating {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  width: 300px;
+  height: 500px;
+  position: absolute;
+  left: -999px;
+}
+#playerNameInput {
+  border: 2px solid #4238d2;
+  margin-left: 20px;
+}
+#saveButtonContainer {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+}
+
+#gameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   z-index: 10;
 }
+
+#playersTable {
+  border: 2px solid #4238d2;
+}
+
 #gameCanvas {
   border: 10px solid black;
   border-radius: 10px;
-  position: absolute;
-  z-index: 1;
+  /* position: relative;
+  z-index: 1; */
 }
+
 #playButton {
   position: absolute;
   z-index: 10;
@@ -69,3 +101,70 @@ h1 {
 
   cursor: pointer;
 }
+#saveButton {
+  color: #fff;
+  padding: 5px 15px;
+  background-color: #4238d2;
+  background-image: radial-gradient(
+      93% 87% at 87% 89%,
+      rgba(0, 0, 0, 0.23) 0%,
+      transparent 86.18%
+    ),
+    radial-gradient(
+      66% 66% at 26% 20%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0) 69.79%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25),
+    inset 0px 3px 9px rgba(255, 255, 255, 0.3),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0px -8px 36px rgba(0, 0, 0, 0.3),
+    inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  font-size: 15px;
+  font-family: "GamePlayed";
+  display: block;
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  cursor: pointer;
+}
+
+/* body {
+  font-family: sans-serif;
+  font-size: 100%;
+  color: #222;
+  background-color: #fff;
+}
+
+p {
+  text-align: center;
+}
+
+.hide {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hide > * {
+  flex: 0 0 25%;
+  font-size: 2em;
+  text-align: center;
+  padding: 1em 0;
+  margin: 0.2em;
+  background-color: #ccc;
+  border-radius: 0.5em;
+  user-select: none;
+}
+
+.hide-item {
+  background-color: #f66;
+  cursor: pointer;
+} */

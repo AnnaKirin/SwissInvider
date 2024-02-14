@@ -65,7 +65,7 @@ class Game {
       }
 
       this.generateCows();
-    }, getRandomInt(5000));
+    }, getRandomInt(500));
   }
   generateClouds() {
     setTimeout(() => {
@@ -87,7 +87,6 @@ class Game {
 
 
   drawPreload() {
-    debugger;
     console.log(this.ctx);
     this.background.draw(this.ctx);
     this.moon.draw(this.ctx);

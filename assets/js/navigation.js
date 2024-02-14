@@ -9,7 +9,8 @@ function onStart() {
   var gameContainer = document.getElementById("gameContainer");
   //Elements oznacza tablice elementow. Trzeba odwolac sie do konkretnego elementu
   gameContainer.style.visibility = "visible";
-  document.getElementById("controlContainer").style.visibility = "hidden";
+  document.getElementById("playButton").style.visibility = "hidden";
+  document.getElementById("gameRating").style.left = "-999px";
   game.start();
 
 }
@@ -17,8 +18,11 @@ function onStart() {
 function onGameOver() {
   var gameContainer = document.getElementById("gameContainer");
   gameContainer.style.visibility = "hidden";
-  document.getElementById("controlContainer").style.visibility = "visible";
-  document.getElementById("gameRating").style.visibility = "visible";
+  document.getElementById("playButton").style.cssText = `
+  visibility:visible; 
+  transform: translate(0px, 50px)`
+
+  document.getElementById("gameRating").style.left = "initial";
 }
 
 function onKeyUp(event) {

@@ -49,8 +49,6 @@
         game.executeOnGameOver(onGameOver);
         console.log("dupa");
 
-        document.getElementById("gameRating").style.visibility = "hidden";
-
         document
           .getElementById("playButton")
           .addEventListener("click", onStart);
@@ -71,7 +69,7 @@
           // let playersFromStorage =  ( .... ) ? .... : ..... operator tenarny
 
           let playersFromStorage = !!json ? JSON.parse(json) : [];
-
+          playersFromStorage.sort((a, b) => b.points - a.points);
           playersFromStorage.push(player);
           localStorage.setItem("players", JSON.stringify(playersFromStorage));
 
@@ -102,18 +100,23 @@
   </head>
 
   <body>
-    <div id="controlContainer">
-      <h1>Swiss invader</h1>
-      <button id="playButton">Start game</button>
-      <div id="gameRating">
-        <input id="playerNameInput" />
-        <button id="saveButton">Save</button>
-        <ul id="playersTable"></ul>
-      </div>
-    </div>
+    <div id="mainContainer">
+      <div id="controlContainer">
+        <h1>Swiss invader</h1>
 
-    <div class="container" id="gameContainer" style="opacity: 0.5">
-      <canvas id="gameCanvas"> </canvas>
+        <div id="gameRating">
+          <div id="saveButtonContainer">
+            <input id="playerNameInput" />
+            <button id="saveButton">Save</button>
+          </div>
+          <ul id="playersTable"></ul>
+        </div>
+      </div>
+
+      <div class="container" id="gameContainer" style="visibility: visible">
+        <canvas id="gameCanvas"> </canvas>
+        <button id="playButton">Start game</button>
+      </div>
     </div>
   </body>
 </html>
