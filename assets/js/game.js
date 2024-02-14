@@ -11,17 +11,25 @@ class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
-    this.initializeCanvas();
+    this.background = new Background(this.canvas, 0, 0);
     this.gameActive = false;
+  }
+
+  preload() {
+    this.moon = new Moon(this.canvas);
+    this.clouds = [];
+
+
+    this.initializeCanvas();
+    this.drawPreload()
+
+    console.log('preload');
   }
 
   start() {
     this.player = new Player(this.canvas);
-    this.moon = new Moon(this.canvas);
-    this.background = new Background(this.canvas, 0, 0);
     this.cows = [];
     this.generateCows();
-    this.clouds = [];
     this.generateClouds();
     this.lasers = [];
     this.currentTime = Date.now();
@@ -76,19 +84,26 @@ class Game {
     this.ctx.fillStyle = "rgba(11, 7, 60, 0.8)";
     this.ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
   }
-  draw() {
+
+
+  drawPreload() {
+    debugger;
+    console.log(this.ctx);
     this.background.draw(this.ctx);
     this.moon.draw(this.ctx);
-    this.player.draw(this.ctx);
-
-    this.lasers.forEach((laser) => {
-      laser.draw(this.ctx);
-    });
-
     this.clouds.forEach((cloud) => {
       cloud.draw(this.ctx);
     });
+    console.log('background draw');
+  }
 
+
+  draw() {
+
+    this.player.draw(this.ctx);
+    this.lasers.forEach((laser) => {
+      laser.draw(this.ctx);
+    });
     this.cows.forEach((cow) => {
       cow.draw(this.ctx);
     });

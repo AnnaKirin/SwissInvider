@@ -4,7 +4,7 @@
 }
 
 body {
-  overflow: hidden; /*powinno byc globalnie */
+  overflow: hidden; /* powinno byc globalnie */
   font-family: "GamePlayed";
   /* display: flex;
   align-items: center; */
@@ -17,7 +17,7 @@ body {
   align-items: center; */
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  /* position: absolute; */
 }
 #controlContainer {
   position: absolute;
@@ -26,12 +26,18 @@ body {
 h1 {
   color: #0e12cf;
   font-size: 3rem;
+  position: absolute;
+  z-index: 10;
 }
 #gameCanvas {
   border: 10px solid black;
   border-radius: 10px;
+  position: absolute;
+  z-index: 1;
 }
 #playButton {
+  position: absolute;
+  z-index: 10;
   color: #fff;
   padding: 15px 25px;
   background-color: #4238d2;

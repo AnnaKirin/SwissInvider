@@ -1,6 +1,10 @@
 let canvas;
 let game;
 
+function preLoad() {
+  game.preload()
+}
+
 function onStart() {
   var gameContainer = document.getElementById("gameContainer");
   //Elements oznacza tablice elementow. Trzeba odwolac sie do konkretnego elementu

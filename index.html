@@ -45,10 +45,11 @@
         canvas = document.getElementById("gameCanvas");
         game = new Game(canvas);
 
-        document.getElementById("gameRating").style.visibility = "hidden";
+        game.preload();
+        game.executeOnGameOver(onGameOver);
         console.log("dupa");
 
-        game.executeOnGameOver(onGameOver);
+        document.getElementById("gameRating").style.visibility = "hidden";
 
         document
           .getElementById("playButton")
@@ -111,7 +112,7 @@
       </div>
     </div>
 
-    <div class="container" id="gameContainer" style="visibility: hidden">
+    <div class="container" id="gameContainer" style="opacity: 0.5">
       <canvas id="gameCanvas"> </canvas>
     </div>
   </body>
