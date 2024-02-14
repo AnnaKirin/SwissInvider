@@ -10,7 +10,7 @@ function onStart() {
   //Elements oznacza tablice elementow. Trzeba odwolac sie do konkretnego elementu
   gameContainer.style.visibility = "visible";
   document.getElementById("playButton").style.visibility = "hidden";
-  document.getElementById("gameRating").style.left = "-999px";
+  document.getElementById("gameRating").style.left = "-9999px";
   game.start();
 
 }
@@ -22,7 +22,8 @@ function onGameOver() {
   visibility:visible; 
   transform: translate(0px, 50px)`
 
-  document.getElementById("gameRating").style.left = "initial";
+  document.getElementById("gameRating").style.left = "20%";
+  document.getElementById("gameRating").style.right = "20%";
 }
 
 function onKeyUp(event) {
