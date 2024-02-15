@@ -67,11 +67,26 @@
           // }
 
           // let playersFromStorage =  ( .... ) ? .... : ..... operator tenarny
+          // (!!json)? JSON.parse(json): [];
 
-          let playersFromStorage = !!json ? JSON.parse(json) : [];
-          playersFromStorage.sort((a, b) => b.points - a.points);
-          playersFromStorage.push(player);
-          localStorage.setItem("players", JSON.stringify(playersFromStorage));
+          let playersFromStorage = [];
+          function fillPlayers() {
+            if (!!json) {
+              playersFromStorage = JSON.parse(json);
+              playersFromStorage.push(player);
+              console.log(
+                playersFromStorage.sort((a, b) => b.points - a.points)
+              );
+              playersFromStorage.sort((a, b) => b.points - a.points);
+              playersFromStorage.splice(6);
+            } else {
+              playersFromStorage = [];
+              playersFromStorage.push(player);
+            }
+            return playersFromStorage;
+          }
+          // [].slice.call(playersFromStorage).sort(function(a,b)
+          localStorage.setItem("players", JSON.stringify(fillPlayers()));
 
           loadPlayersTable();
         });
@@ -106,7 +121,14 @@
 
         <div id="gameRating">
           <div id="saveButtonContainer">
-            <input id="playerNameInput" />
+            <input
+              id="playerNameInput"
+              required
+              minlength="4"
+              maxlength="15"
+              size="15"
+              value="put your name"
+            />
             <button id="saveButton">Save</button>
           </div>
           <ul id="playersTable"></ul>
