@@ -1,4 +1,6 @@
-class Moon {
+import moonImage from "../images/crescent-moon.png"
+
+export class Moon {
   constructor(canvas) {
     this.canvas = canvas;
     this.avatar = this.createMoonAvatar();
@@ -10,7 +12,7 @@ class Moon {
 
   createMoonAvatar() {
     let newImage = new Image();
-    newImage.src = "assets/images/crescent-moon.png";
+    newImage.src = moonImage
     return newImage;
   }
   draw(context) {

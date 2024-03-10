@@ -1,4 +1,6 @@
-class Player {
+import playerImage from "../images/ufo.png"
+
+export class Player {
   constructor(canvas) {
     this.canvas = canvas;
     this.avatar = this.createPlayerAvatar();
@@ -13,7 +15,7 @@ class Player {
   }
   createPlayerAvatar() {
     let newImage = new Image();
-    newImage.src = "assets/images/ufo.png";
+    newImage.src = playerImage;
     return newImage;
   }
   update(deltaTime) {
@@ -26,7 +28,7 @@ class Player {
     ) {
       this.x = this.x + this.velocityX * deltaTime;
     }
-    this.liveLevel -= 0.005;
+    this.liveLevel -= 0.003;
     if (this.liveLevel <= 0) {
       this.isAlive = false;
       this.liveLevel = 0;

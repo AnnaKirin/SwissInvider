@@ -1,7 +1,8 @@
 /*Slowo kluczowe return zwraca cos z funkcji, to cos bedzie dostepne w miejscu wywolania funkcji */
 //odwolywanie przez this tylko do pol w objekcie albo klasie
+import cloudImage from "../images/clouds.png"
 
-class Cloud {
+export class Cloud {
   constructor(canvas, y, size) {
     this.canvas = canvas;
     this.avatar = this.createCloudAvatar();
@@ -12,7 +13,7 @@ class Cloud {
 
   createCloudAvatar() {
     let newImage = new Image();
-    newImage.src = "assets/images/clouds.png";
+    newImage.src = cloudImage;
     return newImage;
   }
   update(x) {

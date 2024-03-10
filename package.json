@@ -1,0 +1,22 @@
+{
+  "name": "swiss-invider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "build": "parcel src/index.html",
+    "build-prod": "parcel build src/index.html",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "parcel-bundler": "^1.12.5",
+    "ts-jest": "^29.1.2"
+  }
+}

@@ -1,4 +1,6 @@
-class Background {
+import backImage from "../images/back.jpg"
+
+export class Background {
   constructor(canvas) {
     this.canvas = canvas;
     this.back1 = this.createBackground();
@@ -9,7 +11,7 @@ class Background {
   }
   createBackground() {
     let background = new Image();
-    background.src = "assets/images/back.jpg";
+    background.src = backImage;
     return background;
   }
   draw(context) {

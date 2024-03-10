@@ -1,4 +1,7 @@
-class Laser {
+import laserImage from "../images/laser.png"
+
+
+export class Laser {
   constructor(canvas, x, y) {
     this.canvas = canvas;
     this.avatar = this.createPlayerAvatar();
@@ -10,7 +13,7 @@ class Laser {
   }
   createPlayerAvatar() {
     let newImage = new Image();
-    newImage.src = "assets/images/laser.png";
+    newImage.src = laserImage;
     return newImage;
   }
   draw(context) {

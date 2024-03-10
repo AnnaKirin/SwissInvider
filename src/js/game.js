@@ -7,7 +7,16 @@ finction () {} - funkcja
 functon dupa() {} - funkcja
 
 */
-class Game {
+import { Background } from "./background";
+import { Moon } from "./moon";
+import { Player } from "./player";
+import { getRandomInt, getRandomFloat } from "./random";
+import { createCow } from "./cow"
+import { Laser } from "./laser";
+import { Cloud } from "./cloud";
+
+
+export class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -16,32 +25,29 @@ class Game {
   }
 
   preload() {
+    console.log('preload');
+    this.initializeCanvas();
     this.moon = new Moon(this.canvas);
     this.clouds = [];
+    this.generateClouds();
 
-
-    this.initializeCanvas();
-    this.drawPreload()
-
-    console.log('preload');
+    this.intervalID = setInterval(() => {
+      this.update();
+      // this.clean();
+      this.draw();
+    }, 16);
   }
 
   start() {
     this.player = new Player(this.canvas);
     this.cows = [];
     this.generateCows();
-    this.generateClouds();
+
     this.lasers = [];
     this.currentTime = Date.now();
     this.previousTime = 0;
     this.deltaTime = 0;
     this.gameActive = true;
-
-    this.intervalID = setInterval(() => {
-      this.update();
-      this.clean();
-      this.draw();
-    }, 16);
   }
 
   executeOnGameOver(callback) {
@@ -65,7 +71,7 @@ class Game {
       }
 
       this.generateCows();
-    }, getRandomInt(500));
+    }, getRandomInt(1000));
   }
   generateClouds() {
     setTimeout(() => {
@@ -86,26 +92,22 @@ class Game {
   }
 
 
-  drawPreload() {
-    console.log(this.ctx);
+  draw() {
     this.background.draw(this.ctx);
-    this.moon.draw(this.ctx);
     this.clouds.forEach((cloud) => {
       cloud.draw(this.ctx);
     });
-    console.log('background draw');
-  }
+    this.moon.draw(this.ctx);
+    if (this.gameActive) {
+      this.player.draw(this.ctx);
+      this.lasers.forEach((laser) => {
+        laser.draw(this.ctx);
+      });
+      this.cows.forEach((cow) => {
+        cow.draw(this.ctx);
+      });
+    }
 
-
-  draw() {
-
-    this.player.draw(this.ctx);
-    this.lasers.forEach((laser) => {
-      laser.draw(this.ctx);
-    });
-    this.cows.forEach((cow) => {
-      cow.draw(this.ctx);
-    });
   }
 
   update() {
@@ -115,14 +117,18 @@ class Game {
 
     this.background.update();
     this.moon.update();
+    this.clouds.forEach((cloud) => {
+      cloud.update(2);
+    });
+
+    if (!this.gameActive) {
+      return
+    }
+
     this.player.update(this.deltaTime);
 
     this.cows.forEach((cow) => {
       cow.update(this.deltaTime);
-    });
-
-    this.clouds.forEach((cloud) => {
-      cloud.update(2);
     });
 
     this.lasers = this.lasers.filter((laser) => {
@@ -151,6 +157,7 @@ class Game {
       this.gameOverCallback();
       clearInterval(this.intervalID);
     }
+
   }
   moveRight() {
     this.player.moveRight();

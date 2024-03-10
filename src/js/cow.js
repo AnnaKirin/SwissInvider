@@ -1,7 +1,12 @@
 const COW_SiZE = 100;
 const MAX_COW_SPEED = 1.0;
 
-function createCow(canvas) {
+import { getRandomInt, getRandomFloat } from "./random";
+import cowImage0 from "../images/cow0.png"
+import cowImage1 from "../images/cow1.png"
+
+
+export function createCow(canvas) {
   //poczatek funkcji
   return {
     //zaczyna sie obiekt
@@ -50,6 +55,7 @@ function createCow(canvas) {
 
 function createCowAvatar() {
   let newImage = new Image();
-  newImage.src = "assets/images/cow" + getRandomInt(2) + ".png";
+  let cowTable = [cowImage0, cowImage1]
+  newImage.src = cowTable[getRandomInt(2)];
   return newImage;
 }
