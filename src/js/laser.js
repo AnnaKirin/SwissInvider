@@ -5,7 +5,7 @@ export class Laser {
   constructor(canvas, x, y) {
     this.canvas = canvas;
     this.avatar = this.createPlayerAvatar();
-    this.x = x;
+    this.x = x + 25;
     this.y = y;
     this.w = 50;
     this.h = 50;

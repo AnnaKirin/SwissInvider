@@ -26,13 +26,6 @@ export class Cloud {
     }
   }
 
-  // update2(x) {
-  //   this.x -= x;
-  //   if (this.x < -200) {
-  //     this.x = this.canvas.clientWidth + 100;
-  //   }
-  // }
-
   draw(context) {
     context.globalAlpha = 0.3;
     context.drawImage(this.avatar, this.x, this.y, this.size, this.size);

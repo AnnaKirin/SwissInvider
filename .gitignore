@@ -3,3 +3,4 @@ sandbox
 node_modules/
 dist
 .parcel-cache
+.cache

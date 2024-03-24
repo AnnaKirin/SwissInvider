@@ -1,27 +1,3 @@
-<!--
-  V 0) Git commit 
- V  1)Na przycisk pojawia sie gra i canvas
-    2)Trzeba bedzie sie bronic przed latajacymi kawalkami sera
-  V 3)Wstawic w tlo poruszajace sie chmurki
-  V  - kilka chmurek z roznymi predkosciami
-     - chmury dodac do tablicy
-  V  - Jest noc, ksiezyc pulsuje
-    4) Zbieranie punktow: trzy trafienia serem - koniec gry
-    5) Responsywny canvas
- V 6) zeby ufuludek nie znikal za krawedziazeby ufuludek nie znikal za krawedzia
- V 7) przerobic playera na klase
- ?) Jak lepiej cos poprawiac, bo zaczynasz od jednej rzeczy i potem wszystko sie psuje - Mozna patrzec na zmiany w source tree poki nie bylo commitow
- V 8) Dodac pocisk zeby sie pojawial na space i spadal w dol
- V 9) add txt to gitignore
- V 10) Laser tam gdzie statek
-   11) Laser z krowa, zeby krowa zmieniala status na inactive
-   12) Zycie playera dodac jak trafisz krowe
-   13) Duzy przycisk start, w tle chmury, gwiazdy
- V 14) Zrobic w tle przesuwny obrazek z gwiazdami, zeby zjezdzal wlewo
-   15) Naprawic szew na obrazkach tla
-   16) Sprawdzac stan czy jest menu czy gra zeby nic sie nie rysowalo
--->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,18 +6,7 @@
     <title>Swiss invider</title>
 
     <link rel="stylesheet" href="css/style.css" />
-
-    <!-- <script src="js/random.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/cow.js"></script>
-    <script src="js/cloud.js"></script>
-    <script type="module" src="js/game.js"></script>
-    <script type="module" src="js/moon.js"></script>
-    <script src="js/laser.js"></script>
-    <script type="module" src="js/background.js"></script> -->
-    <!-- <script type="module" src="js/navigation.js"></script> -->
-    <script type="module" src="js/entrypoint.js"></script>
-    <!-- <script type="module"></script> -->
+    <script type="module" src="js/menu.js"></script>
   </head>
 
   <body>
@@ -57,7 +22,7 @@
               minlength="4"
               maxlength="15"
               size="15"
-              value="put your name"
+              placeholder="put your name"
             />
             <button id="saveButton">Save</button>
           </div>

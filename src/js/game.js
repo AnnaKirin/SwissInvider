@@ -6,7 +6,7 @@ Zmienna jest pojemnjkiem na obiekt, przechowuje obiekt
 finction () {} - funkcja
 functon dupa() {} - funkcja
 
-*/
+// */
 import { Background } from "./background";
 import { Moon } from "./moon";
 import { Player } from "./player";
@@ -14,9 +14,10 @@ import { getRandomInt, getRandomFloat } from "./random";
 import { createCow } from "./cow"
 import { Laser } from "./laser";
 import { Cloud } from "./cloud";
+import { Cheese } from "./cheese";
 
 
-export class Game {
+module.exports = class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -33,16 +34,18 @@ export class Game {
 
     this.intervalID = setInterval(() => {
       this.update();
-      // this.clean();
+      this.clean();
       this.draw();
     }, 16);
   }
 
   start() {
     this.player = new Player(this.canvas);
+    this.cheeses = [];
+    this.generateCheeses();
     this.cows = [];
     this.generateCows();
-
+    console.log("start game")
     this.lasers = [];
     this.currentTime = Date.now();
     this.previousTime = 0;
@@ -55,8 +58,8 @@ export class Game {
   }
 
   initializeCanvas() {
-    let sizeWidth = (80 * window.innerWidth) / 100,
-      sizeHeight = (60 * window.innerHeight) / 100;
+    let sizeWidth = window.innerWidth
+    let sizeHeight = window.innerHeight;
 
     this.canvas.width = sizeWidth;
     this.canvas.height = sizeHeight;
@@ -65,13 +68,23 @@ export class Game {
   }
   generateCows() {
     setTimeout(() => {
-      if (this.cows.length < 9) {
+      if (this.cows.length < 5) {
         this.cows.push(createCow(this.canvas));
         //jako parametr wywolujemy funkcje, ktora zwroci obiekt (mozemy przekazywac funkcje bez wywolania). Przekazujemy wynik wywolania funkcji a nie sama funkcje
       }
 
       this.generateCows();
     }, getRandomInt(1000));
+  }
+  generateCheeses() {
+    setTimeout(() => {
+      if (this.cheeses.length < 3) {
+        const cheese = new Cheese(this.canvas);
+        this.cheeses.push(cheese);
+
+      }
+      this.generateCheeses();
+    }, getRandomInt(5000));
   }
   generateClouds() {
     setTimeout(() => {
@@ -98,6 +111,7 @@ export class Game {
       cloud.draw(this.ctx);
     });
     this.moon.draw(this.ctx);
+
     if (this.gameActive) {
       this.player.draw(this.ctx);
       this.lasers.forEach((laser) => {
@@ -106,6 +120,11 @@ export class Game {
       this.cows.forEach((cow) => {
         cow.draw(this.ctx);
       });
+
+      this.cheeses.forEach((cheese) => {
+        cheese.draw(this.ctx);
+      });
+
     }
 
   }
@@ -124,21 +143,38 @@ export class Game {
     if (!this.gameActive) {
       return
     }
-
     this.player.update(this.deltaTime);
 
     this.cows.forEach((cow) => {
       cow.update(this.deltaTime);
     });
 
+
+    // this.cheeses = this.cheeses.filter((cheese) => {
+    //   return cheese.isActive();
+    // });
+    this.cheeses.forEach((cheese, index) => {
+      cheese.update(this.player.x, this.player.y);
+    });
+    this.cheeses = this.cheeses
+      .filter((cheese) => {
+        if (isCollision(cheese, this.player)) {
+          this.player.takePoints(10);
+          return false;
+        } else {
+          return true;
+        }
+      })
+      .filter((cheese) => {
+        return cheese.onUnderScreen()
+      });
+
     this.lasers = this.lasers.filter((laser) => {
       return laser.isActive();
     });
-
     this.lasers.forEach((laser, index) => {
       laser.update();
       let collisionDetected = false;
-
       // // // Tablica krowy jest filtrowana czy jest spelniony warunek. Funkcja zwraca true. Filter tworzy nowa
       // // //tablice z krowami dla ktorych isCollision jest false
       this.cows = this.cows.filter((cow) => {
@@ -155,7 +191,7 @@ export class Game {
 
     if (!this.player.playerAlive()) {
       this.gameOverCallback();
-      clearInterval(this.intervalID);
+      // clearInterval(this.intervalID);
     }
 
   }
@@ -170,8 +206,12 @@ export class Game {
     this.lasers.push(laser);
     //tworze obiekt lasera, przekazuje jako parametr do metody push, ktora dodaje element do tablicy
   }
-  onKeyUp() {
-    this.player.stop();
+
+  onKeyUpRight() {
+    this.player.stopRight();
+  }
+  onKeyUpLeft() {
+    this.player.stopLeft();
   }
   isGameActive() {
     return this.gameActive;
